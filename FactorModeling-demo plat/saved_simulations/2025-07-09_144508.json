@@ -1,0 +1,25 @@
+{
+  "timestamp": "2025-07-09 14:45:08",
+  "code": "# ----- Earnings-to-Price factor ---------------------------------\n# inputs: df, subindustry, helper fns from operations.py already imported\n\neps = ts_backfill(df[\"income_eps\"])\nearnings_yield = eps / df[\"close\"]\n\ncap = df[\"cap\"]\nsize_bucket = bucket(cs_rank(cap), bin_range=(0.2, 1.0, 0.1))\n\nalpha = group_neutralize(\n            group_rank_normalized(earnings_yield, subindustry),\n            size_bucket)\n\ncustom_feature = cs_winsor(alpha, limits=(0.02, 0.98)).rename(\"custom_feature\")",
+  "settings": {
+    "pct": 0.1,
+    "min_universe": 1000,
+    "equal_weight": true,
+    "max_weight": 0.025,
+    "transaction_cost": false,
+    "cost_per_turnover": 0.0003,
+    "rebalance_period": "daily"
+  },
+  "summary": {
+    "Average Daily Return": "0.04%",
+    "Annualized Return": "10.28%",
+    "Daily Volatility": "0.85%",
+    "Yearly Volatility": "13.47%",
+    "Sharpe Ratio": 0.79,
+    "Sortino Ratio": 1.2,
+    "Max Drawdown": "-24.25%",
+    "Max Daily Return": "4.23%",
+    "Min Daily Return": "-4.8%"
+  },
+  "image_file": "2025-07-09_144508.png"
+}

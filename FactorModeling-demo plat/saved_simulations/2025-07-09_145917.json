@@ -1,0 +1,25 @@
+{
+  "timestamp": "2025-07-09 14:59:17",
+  "code": "# ----- Earnings manipulation factor (DSRI) ---------------------\nreceivables = ts_backfill(df[\"balance_netReceivables\"])\nsales = ts_backfill(df[\"income_revenue\"])\n\ndsri_now  = receivables / sales\ndsri_prev = ts_delay(dsri_now, 252)\ndsri = dsri_now / dsri_prev\n\nalpha = -group_neutralize(\n            group_rank_normalized(dsri.replace([np.inf, -np.inf], np.nan), subindustry),\n            subindustry)\n\ncustom_feature = cs_winsor(alpha, (0.02, 0.98)).rename(\"custom_feature\")",
+  "settings": {
+    "pct": 0.1,
+    "min_universe": 1000,
+    "equal_weight": true,
+    "max_weight": 0.025,
+    "transaction_cost": false,
+    "cost_per_turnover": 0.0003,
+    "rebalance_period": "daily"
+  },
+  "summary": {
+    "Average Daily Return": "0.01%",
+    "Annualized Return": "2.35%",
+    "Daily Volatility": "0.44%",
+    "Yearly Volatility": "6.93%",
+    "Sharpe Ratio": 0.37,
+    "Sortino Ratio": 0.56,
+    "Max Drawdown": "-9.11%",
+    "Max Daily Return": "1.87%",
+    "Min Daily Return": "-2.16%"
+  },
+  "image_file": "2025-07-09_145917.png"
+}

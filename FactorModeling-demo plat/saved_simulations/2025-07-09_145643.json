@@ -1,0 +1,25 @@
+{
+  "timestamp": "2025-07-09 14:56:43",
+  "code": "# ----- Earnings management factor ------------------------------\naccruals = (ts_backfill(df[\"income_netIncome\"]) - ts_backfill(df[\"cashflow_operatingCashFlow\"]))\n\ntotal_assets = ts_backfill(df[\"balance_totalAssets\"])\naccrual_ratio = accruals / total_assets\n\nalpha = -group_neutralize(\n            group_rank_normalized(accrual_ratio.abs(), subindustry),\n            subindustry)\n\ncustom_feature = cs_winsor(alpha, (0.02, 0.98)).rename(\"custom_feature\")",
+  "settings": {
+    "pct": 0.1,
+    "min_universe": 1000,
+    "equal_weight": true,
+    "max_weight": 0.025,
+    "transaction_cost": false,
+    "cost_per_turnover": 0.0003,
+    "rebalance_period": "daily"
+  },
+  "summary": {
+    "Average Daily Return": "0.02%",
+    "Annualized Return": "5.37%",
+    "Daily Volatility": "0.64%",
+    "Yearly Volatility": "10.06%",
+    "Sharpe Ratio": 0.57,
+    "Sortino Ratio": 0.92,
+    "Max Drawdown": "-24.25%",
+    "Max Daily Return": "2.14%",
+    "Min Daily Return": "-4.32%"
+  },
+  "image_file": "2025-07-09_145643.png"
+}

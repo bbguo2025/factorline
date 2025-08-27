@@ -1,0 +1,25 @@
+{
+  "timestamp": "2025-07-09 14:53:42",
+  "code": "# ----- Book-to-Market factor -----------------------------------\nbook_equity = ts_backfill(df[\"balance_totalStockholdersEquity\"])\nbtm_raw = book_equity / df[\"cap\"]\n\nalpha = group_neutralize(\n            group_rank_normalized(btm_raw, subindustry),\n            subindustry)\n\ncustom_feature = cs_winsor(alpha, limits=(0.02, 0.98)).rename(\"custom_feature\")",
+  "settings": {
+    "pct": 0.1,
+    "min_universe": 1000,
+    "equal_weight": true,
+    "max_weight": 0.025,
+    "transaction_cost": false,
+    "cost_per_turnover": 0.0003,
+    "rebalance_period": "daily"
+  },
+  "summary": {
+    "Average Daily Return": "0.03%",
+    "Annualized Return": "7.46%",
+    "Daily Volatility": "1.0%",
+    "Yearly Volatility": "15.81%",
+    "Sharpe Ratio": 0.53,
+    "Sortino Ratio": 0.75,
+    "Max Drawdown": "-23.2%",
+    "Max Daily Return": "9.11%",
+    "Min Daily Return": "-8.43%"
+  },
+  "image_file": "2025-07-09_145342.png"
+}

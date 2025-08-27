@@ -1,0 +1,25 @@
+{
+  "timestamp": "2025-07-09 14:42:46",
+  "code": "# Example: Momentum factor with industry neutralization\nlong_period = 120\nshort_period = 10\n\n# Calculate momentum (long-term minus short-term returns)\nmomentum = ts_sum(returns, long_period) - ts_sum(returns, short_period)\n\n# Neutralize by subindustry (if available)\nif subindustry is not None:\n    momentum_neutralized = group_neutralize(momentum, subindustry)\nelse:\n    momentum_neutralized = momentum\n\n# Apply time decay smoothing\ncustom_feature = ts_decay(momentum_neutralized, 3).rename(\"custom_feature\")",
+  "settings": {
+    "pct": 0.1,
+    "min_universe": 1000,
+    "equal_weight": true,
+    "max_weight": 0.025,
+    "transaction_cost": false,
+    "cost_per_turnover": 0.0003,
+    "rebalance_period": "daily"
+  },
+  "summary": {
+    "Average Daily Return": "0.1%",
+    "Annualized Return": "21.14%",
+    "Daily Volatility": "1.6%",
+    "Yearly Volatility": "25.3%",
+    "Sharpe Ratio": 0.96,
+    "Sortino Ratio": 1.34,
+    "Max Drawdown": "-22.04%",
+    "Max Daily Return": "9.13%",
+    "Min Daily Return": "-6.69%"
+  },
+  "image_file": "2025-07-09_144246.png"
+}
